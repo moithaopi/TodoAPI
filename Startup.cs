@@ -30,6 +30,7 @@ namespace TodoAPI
             services.AddControllers();
             services.AddDbContext<TodoContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("Default")));
+            services.AddSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,7 +40,10 @@ namespace TodoAPI
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseSwagger();
+            app.UseSwaggerUI(options=>{
+                options.SwaggerEndpoint("/swagger/v1/swagger.json","Todo API");
+            });
             app.UseHttpsRedirection();
 
             app.UseRouting();
